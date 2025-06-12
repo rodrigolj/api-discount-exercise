@@ -35,6 +35,7 @@ gem "thruster", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
 gem "rswag"
+gem "api_scaffold"
 
 group :development, :test do
   gem "brakeman", require: false
