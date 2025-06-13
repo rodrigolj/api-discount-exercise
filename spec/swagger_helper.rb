@@ -2,6 +2,19 @@
 
 require 'rails_helper'
 
+def url
+  if Rails.env == "Production"
+    "https://{defaultHost}"
+  else
+    "http://{defaultHost}"
+  end
+end
+
+def default_host_from_options
+  options = Rails.application.config.action_mailer.default_url_options
+  [ options[:host], options[:port] ].compact.join(":")
+end
+
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
@@ -24,10 +37,10 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: url,
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: default_host_from_options
             }
           }
         }
