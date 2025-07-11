@@ -48,4 +48,5 @@ end
 
 group :development do
   gem "ruby-lsp-factory_bot", require: false
+  gem "ruby-lsp-rspec", require: false
 end
