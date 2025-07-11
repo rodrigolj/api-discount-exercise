@@ -23,11 +23,11 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Api::V1::CustomersController, type: :controller do
-  # This should return the minimal set of attributes required to create a valid
-  # Customer. As you add validations to Customer, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
+RSpec.describe Api::V1::PromotionsController, type: :controller do
+               # This should return the minimal set of attributes required to create a valid
+               # Promotion. As you add validations to Promotion, be sure to
+               # adjust the attributes here as well.
+               let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
   }
   let(:invalid_attributes) {
@@ -35,12 +35,12 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
   }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # CustomersController. Be sure to keep this updated too.
+  # PromotionsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "returns a success response" do
-      customer = Customer.create! valid_attributes
+      promotion = Promotion.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -48,60 +48,64 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      customer = Customer.create! valid_attributes
-      get :show, params: { id: customer.to_param }, session: valid_session
+      promotion = Promotion.create! valid_attributes
+      get :show, params: { id: promotion.to_param }, session: valid_session
       expect(response).to be_successful
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new Customer" do
+      it "creates a new Promotion" do
         expect {
-          post :create, params: { customer: valid_attributes }, session: valid_session
-        }.to change(Customer, :count).by(1)
+          post :create, params: { promotion: valid_attributes }, session: valid_session
+        }.to change(Promotion, :count).by(1)
       end
 
-      it "renders a JSON response with the new customer" do
-        post :create, params: { customer: valid_attributes }, session: valid_session
+      it "renders a JSON response with the new promotion" do
+        post :create, params: { promotion: valid_attributes }, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(api_v1_customer_url(Customer.last))
+        expect(response.location).to eq(api_v1_promotion_url(Promotion.last))
       end
     end
+
     context "with invalid params" do
-      it "renders a JSON response with errors for the new customer" do
-        post :create, params: { customer: invalid_attributes }, session: valid_session
+      it "renders a JSON response with errors for the new promotion" do
+        post :create, params: { promotion: invalid_attributes }, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
     end
   end
+
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested customer" do
-        customer = Customer.create! valid_attributes
-        put :update, params: { id: customer.to_param, customer: new_attributes }, session: valid_session
-        customer.reload
+      it "updates the requested promotion" do
+        promotion = Promotion.create! valid_attributes
+        put :update, params: { id: promotion.to_param, promotion: new_attributes }, session: valid_session
+        promotion.reload
         skip("Add assertions for updated state")
       end
-      it "renders a JSON response with the customer" do
-        customer = Customer.create! valid_attributes
 
-        put :update, params: { id: customer.to_param, customer: valid_attributes }, session: valid_session
+      it "renders a JSON response with the promotion" do
+        promotion = Promotion.create! valid_attributes
+
+        put :update, params: { id: promotion.to_param, promotion: valid_attributes }, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
     end
-    context "with invalid params" do
-      it "renders a JSON response with errors for the customer" do
-        customer = Customer.create! valid_attributes
 
-        put :update, params: { id: customer.to_param, customer: invalid_attributes }, session: valid_session
+    context "with invalid params" do
+      it "renders a JSON response with errors for the promotion" do
+        promotion = Promotion.create! valid_attributes
+
+        put :update, params: { id: promotion.to_param, promotion: invalid_attributes }, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -109,11 +113,11 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested customer" do
-      customer = Customer.create! valid_attributes
+    it "destroys the requested promotion" do
+      promotion = Promotion.create! valid_attributes
       expect {
-        delete :destroy, params: { id: customer.to_param }, session: valid_session
-      }.to change(Customer, :count).by(-1)
+        delete :destroy, params: { id: promotion.to_param }, session: valid_session
+      }.to change(Promotion, :count).by(-1)
     end
   end
 end

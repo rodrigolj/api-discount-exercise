@@ -9,11 +9,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :orders, except: [:new, :edit] do
-        resources :products, controller: 'order_products'
+      resources :orders, except: [ :new, :edit ] do
+        resources :products, controller: "order_products"
       end
-      resources :customers, except: [:new, :edit]
-      resources :products, except: [:new, :edit]
+      resources :customers, except: [ :new, :edit ]
+      resources :products, except: [ :new, :edit ]
     end
   end
 

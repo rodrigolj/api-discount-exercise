@@ -1,11 +1,11 @@
 class Api::V1::OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order, only: [ :show, :update, :destroy ]
 
   def index
     @orders = Order.all
     render json: @orders
   end
-  
+
   def show
     render json: @order
   end
@@ -14,7 +14,7 @@ class Api::V1::OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      render json: @order, status: :created, location: [:api, :v1, @order]
+      render json: @order, status: :created, location: [ :api, :v1, @order ]
     else
       render json: @order.errors, status: :unprocessable_entity
     end

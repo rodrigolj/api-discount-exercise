@@ -1,23 +1,29 @@
-require 'swagger_helper'
+require "swagger_helper"
 
-RSpec.describe 'api/v1/products', type: :request do
-
-  path '/api/v1/products' do
-
-    get('list products') do
+RSpec.describe "api/v1/products", type: :request do
+  path "/api/v1/products" do
+    get("list products") do
       tags "Products"
       consumes "application/json"
       produces "application/json"
 
-      response(200, 'successful') do
-        example 'application/json', :product, [{
+      response(200, "successful") do
+        example "application/json", :product, [
+          {
             id: 1,
-            title: 'T-shirt',
-            price: '35.99',
+            title: "T-shirt",
+            price: "35.99",
             "created_at": "2025-06-13T17:56:07.979Z",
             "updated_at": "2025-06-13T17:56:07.979Z"
-        }]
-
+          },
+          {
+            id: 2,
+            title: "Pants",
+            price: "60.99",
+            "created_at": "2025-06-13T19:56:07.979Z",
+            "updated_at": "2025-06-16T13:04:51.471Z"
+          }
+        ]
 
         schema type: :array,
           properties: {
@@ -34,16 +40,17 @@ RSpec.describe 'api/v1/products', type: :request do
 
         after do |example|
           example.metadata[:response][:content] = {
-            'application/json' => {
+            "application/json" => {
               example: JSON.parse(response.body, symbolize_names: true)
             }
           }
         end
+
         run_test!
       end
     end
 
-    post('create product') do
+    post("create product") do
       tags "Products"
       consumes "application/json"
       produces "application/json"
@@ -64,7 +71,15 @@ RSpec.describe 'api/v1/products', type: :request do
         required: [ "product" ]
       }
 
-      response(201, 'successful') do
+      response(201, "successful") do
+        example "application/json", :product, [ {
+          id: 1,
+          title: "T-shirt",
+          price: "35.99",
+          "created_at": "2025-06-13T17:56:07.979Z",
+          "updated_at": "2025-06-13T17:56:07.979Z"
+        } ]
+
         let(:product) { { product: { name: "t-shirt", price: 35.99 } } }
 
         schema type: :object,
@@ -76,82 +91,87 @@ RSpec.describe 'api/v1/products', type: :request do
             updated_at: { type: :string, format: :date_time }
           },
           required: %w[id name price created_at updated_at]
-          after do |example|
-            example.metadata[:response][:content] = {
-              'application/json' => {
-                example: JSON.parse(response.body, symbolize_names: true)
-              }
+        after do |example|
+          example.metadata[:response][:content] = {
+            "application/json" => {
+              example: JSON.parse(response.body, symbolize_names: true)
             }
-          end
-          run_test! do | response |
-            data = JSON.parse(response.body)
-            expect(data["name"]).to eq("t-shirt")
-            expect(data["price"]).to eq("35.99")
-          end
+          }
+        end
+
+        run_test! do | response |
+          data = JSON.parse(response.body)
+          expect(data["name"]).to eq("t-shirt")
+          expect(data["price"]).to eq("35.99")
+        end
       end
     end
   end
 
-  path '/api/v1/products/{id}' do
+  path "/api/v1/products/{id}" do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
+    parameter name: "id", in: :path, type: :string, description: "id"
 
-    get('show product') do
-      response(200, 'successful') do
-        let(:id) { '123' }
+    get("show product") do
+      response(200, "successful") do
+        let(:id) { "123" }
 
         after do |example|
           example.metadata[:response][:content] = {
-            'application/json' => {
+            "application/json" => {
               example: JSON.parse(response.body, symbolize_names: true)
             }
           }
         end
+
         run_test!
       end
     end
 
-    patch('update product') do
-      response(200, 'successful') do
-        let(:id) { '123' }
+    patch("update product") do
+      response(200, "successful") do
+        let(:id) { "123" }
 
         after do |example|
           example.metadata[:response][:content] = {
-            'application/json' => {
+            "application/json" => {
               example: JSON.parse(response.body, symbolize_names: true)
             }
           }
         end
+
         run_test!
       end
     end
 
-    put('update product') do
-      response(200, 'successful') do
-        let(:id) { '123' }
+    put("update product") do
+      response(200, "successful") do
+        let(:id) { "123" }
 
         after do |example|
           example.metadata[:response][:content] = {
-            'application/json' => {
+            "application/json" => {
               example: JSON.parse(response.body, symbolize_names: true)
             }
           }
         end
+
         run_test!
       end
     end
 
-    delete('delete product') do
-      response(200, 'successful') do
-        let(:id) { '123' }
+    delete("delete product") do
+      response(200, "successful") do
+        let(:id) { "123" }
 
         after do |example|
           example.metadata[:response][:content] = {
-            'application/json' => {
+            "application/json" => {
               example: JSON.parse(response.body, symbolize_names: true)
             }
           }
         end
+
         run_test!
       end
     end
